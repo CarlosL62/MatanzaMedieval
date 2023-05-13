@@ -5,6 +5,7 @@
 package com.mycompany.matanzamedieval;
 
 import Archivos.Archivos;
+import Archivos.Ranking;
 import Inventario.Inventario;
 import Tableros.GeneracionTablero;
 import Tableros.SeleccionTableros;
@@ -121,6 +122,11 @@ public class Menu extends javax.swing.JFrame {
         btnRanking.setFont(new java.awt.Font("Dutch801 Rm BT", 0, 12)); // NOI18N
         btnRanking.setForeground(new java.awt.Color(255, 255, 255));
         btnRanking.setText("Ranking");
+        btnRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRankingActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRanking, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 100, -1));
 
         lblTitulo.setFont(new java.awt.Font("Dutch801 XBd BT", 1, 36)); // NOI18N
@@ -182,6 +188,13 @@ public class Menu extends javax.swing.JFrame {
         inventario.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
+        Ranking ranking = new Ranking(this);
+        ranking.setLocationRelativeTo(null);
+        ranking.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRankingActionPerformed
 
     /**
      * @param args the command line arguments

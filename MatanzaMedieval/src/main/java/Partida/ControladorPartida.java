@@ -4,13 +4,17 @@
  */
 package Partida;
 
+import Archivos.Archivos;
 import Casillas.Casillas;
 import Casillas.Personajes.Enemigos;
 import Casillas.Personajes.Jugables;
 import Casillas.Personajes.*;
 import Casillas.Terrenos.*;
 import Tableros.Tableros;
+import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -93,12 +97,11 @@ public class ControladorPartida {
         int cont = 0;
 
         do {
-            // Se asigna a cada casilla una identidad según el caracter del tablero
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
                     randomNum = rand.nextInt(5);
                     //Si es 0, asigna el espacio y almacena el terreno
-                    if (randomNum == 0 && !(tablero[i][j] instanceof Lava && tablero[i][j] instanceof Agua && tablero[i][j] instanceof Jugables)) {
+                    if (randomNum == 0 && tablero[i][j] instanceof Planicie) {
                         //Ubicamos al enemigo
                         if (cont < enemigos.length) {
                             enemigos[cont].setCasillaTerreno(botonesAsignados[i][j], i, j);
@@ -149,13 +152,60 @@ public class ControladorPartida {
         return enemigos;
     }
 
+    public void muertoCheck(Casillas[][] tablero, Enemigos[] enemigos, Jugables[] jugablePartida) {
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[0].length; j++) {
+                if (botonesAsignados[i][j] instanceof Personajes) {
+                    if (botonesAsignados[i][j] instanceof Enemigos) {
+                        for (int k = 0; k < enemigos.length; k++) {
+                            if (botonesAsignados[i][j] == enemigos[k]) {
+                                if (enemigos[k].getVida() <= 0) {
+                                    botonesAsignados[i][j] = new Planicie();
+                                }
+                            }
+                        }
+                    }
+                    if (botonesAsignados[i][j] instanceof Jugables) {
+                        for (int k = 0; k < jugablePartida.length; k++) {
+                            if (botonesAsignados[i][j] == jugablePartida[k]) {
+                                if (jugablePartida[k].getVida() <= 0) {
+                                    botonesAsignados[i][j] = new Planicie();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public boolean enemigosMuertos(Enemigos[] enemigos){
+        boolean enemigosMuertos = true;
+        for (Enemigos enemigo : enemigos) {
+            if (enemigo.getVida() > 0) {
+                enemigosMuertos = false;
+            }
+        }
+        return enemigosMuertos;
+    }
+    
+    private int puntosPartida;
+
+    public int getPuntosPartida() {
+        return puntosPartida;
+    }
+
+    public void setPuntosPartida(int puntosPartida) {
+        this.puntosPartida = puntosPartida;
+    }
+    
     public void almacenarPuntaje(String usuario) {
-//        Archivos archivo = new Archivos();
-//        try {
-//            archivo.almacenarPuntaje(usuario, inventario.getPuntosPartida());
-//        } catch (IOException ex) {
-//            Logger.getLogger(ControladorPartida.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        Archivos archivo = new Archivos();
+        try {
+            archivo.almacenarPuntaje(usuario, puntosPartida);
+        } catch (IOException ex) {
+            Logger.getLogger(ControladorPartida.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     //Apagar botones

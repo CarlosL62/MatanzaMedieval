@@ -11,6 +11,15 @@ package Casillas.Personajes;
 public class Enemigos extends Personajes{
     
     protected int puntos;
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    
     
     
 }

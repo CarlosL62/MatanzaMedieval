@@ -36,7 +36,9 @@ public class Partida extends javax.swing.JFrame {
     private String usuario;
     private int numeroTablero;
     private int opcionDificultad;
+
     public Partida(Componentes componentes, Jugables[] jugablesPartida, int numeroTablero, int opcionDifultad, Menu menu) {
+        this.control = new ControladorPartida();
         initComponents();
         this.componentes = componentes;
         this.jugablesPartida = jugablesPartida;
@@ -44,12 +46,12 @@ public class Partida extends javax.swing.JFrame {
         this.opcionDificultad = opcionDifultad;
         this.menu = menu;
         pnlAccionesCombatiente.setVisible(false);
+        pnlEstadoPersonajes.setVisible(false);
         usuario = JOptionPane.showInputDialog(null, "Ingrese su nickname:");
         partidaActiva();
     }
-    
-    public Partida(){
-        
+
+    public Partida() {
     }
 
     /**
@@ -68,6 +70,17 @@ public class Partida extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAtacar = new javax.swing.JButton();
         btnMover = new javax.swing.JButton();
+        pnlEstadoPersonajes = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        lblPersonaje1 = new javax.swing.JLabel();
+        lblPersonaje2 = new javax.swing.JLabel();
+        lblPersonaje3 = new javax.swing.JLabel();
+        lblPersonaje4 = new javax.swing.JLabel();
+        lblPersonaje5 = new javax.swing.JLabel();
+        lblPersonaje6 = new javax.swing.JLabel();
+        lblPersonaje7 = new javax.swing.JLabel();
+        lblPersonaje8 = new javax.swing.JLabel();
+        lblPersonaje9 = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -145,6 +158,76 @@ public class Partida extends javax.swing.JFrame {
 
         jPanel1.add(pnlAccionesCombatiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 170, 100));
 
+        jLabel2.setText("Estado de los personajes");
+
+        lblPersonaje1.setText("jLabel3");
+
+        lblPersonaje2.setText("jLabel4");
+
+        lblPersonaje3.setText("jLabel5");
+
+        lblPersonaje4.setText("jLabel6");
+
+        lblPersonaje5.setText("jLabel7");
+
+        lblPersonaje6.setText("jLabel8");
+
+        lblPersonaje7.setText("jLabel9");
+
+        lblPersonaje8.setText("jLabel10");
+
+        lblPersonaje9.setText("jLabel11");
+
+        javax.swing.GroupLayout pnlEstadoPersonajesLayout = new javax.swing.GroupLayout(pnlEstadoPersonajes);
+        pnlEstadoPersonajes.setLayout(pnlEstadoPersonajesLayout);
+        pnlEstadoPersonajesLayout.setHorizontalGroup(
+            pnlEstadoPersonajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstadoPersonajesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlEstadoPersonajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addGroup(pnlEstadoPersonajesLayout.createSequentialGroup()
+                        .addGroup(pnlEstadoPersonajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPersonaje1)
+                            .addComponent(lblPersonaje2)
+                            .addComponent(lblPersonaje3)
+                            .addComponent(lblPersonaje4)
+                            .addComponent(lblPersonaje5)
+                            .addComponent(lblPersonaje6)
+                            .addComponent(lblPersonaje7)
+                            .addComponent(lblPersonaje8)
+                            .addComponent(lblPersonaje9))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlEstadoPersonajesLayout.setVerticalGroup(
+            pnlEstadoPersonajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstadoPersonajesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPersonaje9)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(pnlEstadoPersonajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 170, 270));
+
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo.jpeg"))); // NOI18N
         jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 500));
 
@@ -188,7 +271,7 @@ public class Partida extends javax.swing.JFrame {
         //Movimiento del personaje
         atacando = false;
         moviendo = true;
-        jugablesPartida[0].movimientoPersonaje(botonesAsignados, jugablesPartida[0].getCoordenadaY(), jugablesPartida[0].getCoordenadaX());
+        jugablesPartida[0].movimientoPersonaje(botonesAsignados, jugablesPartida[0].getCoordenadaY(), jugablesPartida[0].getCoordenadaX(), control);
     }//GEN-LAST:event_btnMoverActionPerformed
 
     /**
@@ -225,12 +308,12 @@ public class Partida extends javax.swing.JFrame {
             }
         });
     }
-    
-    private ControladorPartida control = new ControladorPartida();
+
+    private ControladorPartida control;
     private Casillas[][] botonesAsignados;
-    
+
     public void partidaActiva() {
-        
+
         try {
             //Construye el tablero
             control.construccionTablero(componentes.getTablerosCargados().obtenerValor(numeroTablero));
@@ -245,12 +328,11 @@ public class Partida extends javax.swing.JFrame {
 //        lblCantBombasTorpedo.setText(String.valueOf(inventario.cantidadBombasPartida[2]));
 //        lblCantBombasHecatombe.setText(String.valueOf(inventario.cantidadBombasPartida[3]));
 //        lblCantBarcos.setText(String.valueOf(inventario.getCantidadBarcosTablero()));
-        
         mostrarTablero();
         //Apagamos las casillas que no sean planicie
-        
+
         botonesAsignados = control.soloBotones(botonesAsignados, "planicie");
-        
+
         mostrarTablero();
         JOptionPane.showMessageDialog(null, "Ubique en el tablero a " + jugablesPartida[0].getNickName(), "Ubicar combatiente", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -286,12 +368,70 @@ public class Partida extends javax.swing.JFrame {
         pnlTablero.repaint();
         pnlTablero.revalidate();
     }
-    
-    //Actividad de cada botón
 
-    private Enemigos[] enemigos;
+    public void statusPersonajes() {
+
+        lblPersonaje1.setText(jugablesPartida[0].estadoPersonaje());
+
+        try {
+            lblPersonaje2.setText(enemigos[0].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje2.setText("");
+        }
+        try {
+            lblPersonaje3.setText(enemigos[1].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje3.setText("");
+        }
+        try {
+            lblPersonaje4.setText(enemigos[2].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje4.setText("");
+        }
+        try {
+            lblPersonaje5.setText(enemigos[3].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje5.setText("");
+        }
+        try {
+            lblPersonaje6.setText(enemigos[4].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje6.setText("");
+        }
+        try {
+            lblPersonaje7.setText(enemigos[5].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje7.setText("");
+        }
+        try {
+            lblPersonaje8.setText(enemigos[6].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje8.setText("");
+        }
+        try {
+            lblPersonaje9.setText(enemigos[7].estadoPersonaje());
+        } catch (Exception e) {
+            lblPersonaje9.setText("");
+        }
+
+    }
+
     
+    public void cerrarPartida(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje + "\nPuntos: " + control.getPuntosPartida(), "Partida terminada", JOptionPane.INFORMATION_MESSAGE);
+        // Se almacena el punteo
+        control.almacenarPuntaje(usuario);
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        // Se cierra este formulario
+        this.dispose();
+    }
+
+    //Actividad de cada botón
+    private Enemigos[] enemigos;
+
     private boolean posicionarCombatiente = true;
+
     private class ButtonController implements ActionListener {
 
         @Override
@@ -301,24 +441,26 @@ public class Partida extends javax.swing.JFrame {
                 for (int j = 0; j < botonesAsignados[0].length; j++) {
                     //System.out.println(botonesAsignados[i][j].getCaracterCasillas());
                     if (e.getSource().equals(botonesAsignados[i][j])) {
-                        
+
                         //ACCIONES
                         if (posicionarCombatiente) {
-                            
+
                             //Ubicamos al jugador
                             jugablesPartida[0].setCasillaTerreno(botonesAsignados[i][j], i, j);
                             botonesAsignados[i][j] = jugablesPartida[0];
                             posicionarCombatiente = false;
+
+                            //Se crean los enemigos
                             enemigos = control.asignacionEnemigos(botonesAsignados, opcionDificultad);
                             mostrarTablero();
                             control.encenderBotones(botonesAsignados);
-                            
-                            //Se crean los enemigos
-                            
-                        } else{
+
+                            pnlEstadoPersonajes.setVisible(true);
+                            statusPersonajes();
+                        } else {
                             if (botonesAsignados[i][j] instanceof Jugables) {
                                 pnlAccionesCombatiente.setVisible(true);
-                            } else if (botonesAsignados[i][j] instanceof Terrenos && moviendo){
+                            } else if (botonesAsignados[i][j] instanceof Terrenos && moviendo) {
                                 // Regresamos el valor original a la casilla anterior del personaje
                                 botonesAsignados[jugablesPartida[0].getFilaTerreno()][jugablesPartida[0].getColumnaTerreno()] = jugablesPartida[0].getCasillaTerreno();
                                 //Ubicamos al jugador
@@ -329,21 +471,39 @@ public class Partida extends javax.swing.JFrame {
                                 moviendo = false;
                                 control.encenderBotones(botonesAsignados);
                                 pnlAccionesCombatiente.setVisible(false);
+                                statusPersonajes();
                             } else if ((botonesAsignados[i][j] instanceof Enemigos || botonesAsignados[i][j] instanceof Arbol) && atacando) {
-                                //LOGICA DE ATAQUE
-                                
+                                //Ataque
+                                for (int k = 0; k < enemigos.length; k++) {
+                                    if (botonesAsignados[i][j] == enemigos[k]) {
+                                        enemigos[k].setVida(enemigos[k].getVida() - jugablesPartida[0].getDaño());
+                                        if (enemigos[k].getVida() <= 0) {
+                                            control.setPuntosPartida(control.getPuntosPartida() + enemigos[k].getPuntos());
+                                        }
+                                        control.muertoCheck(botonesAsignados, enemigos, jugablesPartida);
+                                        mostrarTablero();
+                                    }
+                                }
+
                                 mostrarTablero();
+                                statusPersonajes();
                                 //Volvemos a encender todos los botones
                                 atacando = false;
                                 control.encenderBotones(botonesAsignados);
                                 pnlAccionesCombatiente.setVisible(false);
                             }
-                            
-                            
-                            
+
                         }
-                        
-                        
+
+                        //Se chequea que haya enemigos vivos aún
+                        if (control.enemigosMuertos(enemigos)) {
+                            cerrarPartida("Felicidades, has defendido al reino");
+                            break;
+                        } else if (jugablesPartida[0].getVida() <= 0) {
+                            cerrarPartida("Has perdido, han matado a todos los niños del reino");
+                            break;
+                        }
+
 //                            if (inventario.cantidadBombasPartida[bombaSeleccionada] > 0) {
 //                                if (!botonesAsignados[i][j].isRevelada()) {
 //                                    switch (bombaSeleccionada) {
@@ -404,20 +564,31 @@ public class Partida extends javax.swing.JFrame {
 //                                    }
 //                                }
 //                            }
-                        }
                     }
                 }
             }
         }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtacar;
     private javax.swing.JButton btnMover;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lblPersonaje1;
+    private javax.swing.JLabel lblPersonaje2;
+    private javax.swing.JLabel lblPersonaje3;
+    private javax.swing.JLabel lblPersonaje4;
+    private javax.swing.JLabel lblPersonaje5;
+    private javax.swing.JLabel lblPersonaje6;
+    private javax.swing.JLabel lblPersonaje7;
+    private javax.swing.JLabel lblPersonaje8;
+    private javax.swing.JLabel lblPersonaje9;
     private javax.swing.JPanel pnlAccionesCombatiente;
+    private javax.swing.JPanel pnlEstadoPersonajes;
     private javax.swing.JPanel pnlTablero;
     // End of variables declaration//GEN-END:variables
 }

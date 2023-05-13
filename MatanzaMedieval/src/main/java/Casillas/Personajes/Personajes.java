@@ -110,13 +110,25 @@ public class Personajes extends Casillas {
     protected int auxFila, auxColumna;
 
     // Movimiento de los personajes
-    public void movimientoPersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna) {
+    public void movimientoPersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna, ControladorPartida control) {
         
     }
 
     //MOVIMIENTO PERSONAJE TIERRA
     protected void movimientoPersonajeValido(Casillas[][] tablero, int destinoY, int destinoX) {
         
+    }
+    
+    //ESTADO
+    public String estadoPersonaje(){
+        String estadoPersonaje;
+        if (vida > 0) {
+            estadoPersonaje = nombre + ": " + vida;
+        } else {
+            estadoPersonaje = nombre + ": " + 0;
+        }
+        
+        return estadoPersonaje;
     }
 
 }

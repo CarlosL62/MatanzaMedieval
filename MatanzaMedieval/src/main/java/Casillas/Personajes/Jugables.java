@@ -16,7 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author carlo
  */
-public class Jugables extends Personajes {
+public class Jugables extends Personajes implements Cloneable{
+
+    //DUPLICACION DE LOS PERSONAJES
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return (Jugables) super.clone();
+    }
 
     protected String nickName;
 
@@ -61,7 +67,7 @@ public class Jugables extends Personajes {
             JOptionPane.showMessageDialog(null, "Vida mejorada", "Mejora realizada", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
+
     // Mejora de daño
     public void mejorarDaño(Componentes componentes) {
         if (componentes.getOro() < 125) {
@@ -75,7 +81,7 @@ public class Jugables extends Personajes {
             JOptionPane.showMessageDialog(null, "Daño mejorada", "Mejora realizada", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
+
     // Mejora de movimiento
     public void mejorarMovimiento(Componentes componentes) {
         if (componentes.getOro() < 500) {
@@ -90,17 +96,16 @@ public class Jugables extends Personajes {
             JOptionPane.showMessageDialog(null, "Movimiento mejorado", "Mejora realizada", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
+
     //MOVIMIENTO
     // Movimiento de los personajes
     @Override
-    public void movimientoPersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna) {
+    public void movimientoPersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna, ControladorPartida control) {
         if (vida > 0) {
 
-            ControladorPartida control = new ControladorPartida();
             //Apagamos todos los botones
             tablero = control.soloBotones(tablero, "a");
-            
+
             movimientoValido = true;
             movimientoTerminado = false;
             moverContador = 0;
@@ -169,23 +174,22 @@ public class Jugables extends Personajes {
             if ((tablero[destinoY][destinoX] instanceof Planicie)
                     || (tablero[destinoY][destinoX] instanceof Lava)) {
                 tablero[destinoY][destinoX].setEnabled(true);
-            } else{
+            } else {
                 movimientoValido = false;
             }
         } else {
             movimientoValido = false;
         }
     }
-    
-    
+
     //ATAQUES
-    public void ataquePersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna){
+    public void ataquePersonaje(Casillas[][] tablero, int posicionFila, int posicionColumna) {
         if (vida > 0) {
 
             ControladorPartida control = new ControladorPartida();
             //Apagamos todos los botones
             tablero = control.soloBotones(tablero, "a");
-            
+
             movimientoValido = true;
             movimientoTerminado = false;
             moverContador = 0;
@@ -242,7 +246,7 @@ public class Jugables extends Personajes {
         }
     }
 
-    protected void ataqueValido(Casillas[][] tablero, int yAtaque, int xAtaque){
+    protected void ataqueValido(Casillas[][] tablero, int yAtaque, int xAtaque) {
         // Verificación que el ataque sea válido, primero que este dentro del
         // tablero y que sea a una casilla válida
 
@@ -252,12 +256,12 @@ public class Jugables extends Personajes {
             if ((tablero[yAtaque][xAtaque] instanceof Enemigos)
                     || (tablero[yAtaque][xAtaque] instanceof Arbol)) {
                 tablero[yAtaque][xAtaque].setEnabled(true);
-            } else{
+            } else {
                 movimientoValido = false;
             }
         } else {
             movimientoValido = false;
         }
     }
-    
+
 }

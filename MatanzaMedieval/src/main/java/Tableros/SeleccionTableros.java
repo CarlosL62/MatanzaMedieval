@@ -6,6 +6,7 @@ package Tableros;
 
 import Inventario.Inventario;
 import Listas.ListaException;
+import Listas.ListaGenerica;
 import Partida.Partida;
 import com.mycompany.matanzamedieval.Componentes;
 import com.mycompany.matanzamedieval.Menu;
@@ -43,7 +44,6 @@ public class SeleccionTableros extends javax.swing.JFrame {
                     Logger.getLogger(SeleccionTableros.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         }
     }
 
@@ -70,6 +70,8 @@ public class SeleccionTableros extends javax.swing.JFrame {
         btnSeleccionarTablero = new javax.swing.JButton();
         txtTableroNo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        btnMayMen = new javax.swing.JButton();
+        btnMenMay = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
@@ -127,6 +129,20 @@ public class SeleccionTableros extends javax.swing.JFrame {
 
         jLabel3.setText("Tablero No:");
 
+        btnMayMen.setText("Mayor a menor");
+        btnMayMen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMayMenActionPerformed(evt);
+            }
+        });
+
+        btnMenMay.setText("Menor a mayor");
+        btnMenMay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenMayActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlSeleccionTablerosLayout = new javax.swing.GroupLayout(pnlSeleccionTableros);
         pnlSeleccionTableros.setLayout(pnlSeleccionTablerosLayout);
         pnlSeleccionTablerosLayout.setHorizontalGroup(
@@ -141,7 +157,9 @@ public class SeleccionTableros extends javax.swing.JFrame {
                         .addComponent(txtTableroNo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlSeleccionTablerosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnMayMen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlSeleccionTablerosLayout.setVerticalGroup(
@@ -155,7 +173,11 @@ public class SeleccionTableros extends javax.swing.JFrame {
                     .addComponent(txtTableroNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSeleccionarTablero)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(btnMayMen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMenMay)
+                .addContainerGap())
         );
 
         jPanel1.add(pnlSeleccionTableros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 150, 330));
@@ -224,14 +246,115 @@ public class SeleccionTableros extends javax.swing.JFrame {
             } else{
                 //Se crea una nueva partida
                 inventario = new Inventario(componentes,opcion, menu);
+                inventario.setLocationRelativeTo(null);
+                inventario.setVisible(true);
+                this.dispose();
             }
         }
 
-        inventario.setLocationRelativeTo(null);
-        inventario.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btnSeleccionarTableroActionPerformed
 
+    private void btnMayMenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMayMenActionPerformed
+        mostrarTableros(ordenamientoTableros(0));
+    }//GEN-LAST:event_btnMayMenActionPerformed
+
+    private void btnMenMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenMayActionPerformed
+       mostrarTableros(ordenamientoTableros(1));
+    }//GEN-LAST:event_btnMenMayActionPerformed
+
+    public void mostrarTableros(Tableros[] tableros){
+        if (componentes.getTablerosCargados().obtenerSize() == 0) {
+            //No hay tableros
+            txtAreaTableros.setText("No hay tableros disponibles, crea o carga uno para jugar");
+        } else {
+            txtAreaTableros.setText("");
+            for (int i = 0; i < tableros.length; i++) {
+                txtAreaTableros.setText(txtAreaTableros.getText() + "\n" + (i + 1) + ". " + tableros[i].getId());
+            }
+        }
+    }
+    
+    public Tableros[] ordenamientoTableros(int opcion) {
+        
+        Tableros[] tablerosOrdenado = new Tableros[componentes.getTablerosCargados().obtenerSize()];
+        
+//        for (int i = 0; i < componentes.getTablerosCargados().obtenerSize(); i++) {
+//            if (puntajes[i] != null) {
+//                String[] puntosTexto = puntajes[i].split("___");
+//                puntos[i] = Integer.parseInt(puntosTexto[1]);
+//            } else {
+//                break;
+//            }
+//        }
+
+        boolean hayCambios;
+        Tableros auxiliar;
+        // opcion = 0 = Mayor a menor | opcion = 1 = Menor a mayor
+        if (opcion == 0) {
+            do {
+                hayCambios = false;
+                for (int i = 1; i <= componentes.getTablerosCargados().obtenerSize()-1; i++) {
+                    int tamañoTotalSig = 0;
+                    int tamañoTotal = 0;
+                    try {
+                        tamañoTotalSig = componentes.getTablerosCargados().obtenerValor(i+1).getFilas() * componentes.getTablerosCargados().obtenerValor(i+1).getColumnas();
+                        tamañoTotal = componentes.getTablerosCargados().obtenerValor(i).getFilas() * componentes.getTablerosCargados().obtenerValor(i).getColumnas();
+                    } catch (ListaException ex) {
+                        Logger.getLogger(SeleccionTableros.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    if (tamañoTotalSig > tamañoTotal) {
+                        try {
+                            auxiliar = componentes.getTablerosCargados().obtenerValor(i);
+                            //auxiliarTexto = puntajes[i];
+                            tablerosOrdenado[i] = componentes.getTablerosCargados().obtenerValor(i+1);
+                            //puntajes[i] = puntajes[i + 1];
+                            tablerosOrdenado[i + 1] = auxiliar;
+                            //puntajes[i + 1] = auxiliarTexto;
+                            hayCambios = true;
+                        } catch (ListaException ex) {
+                            Logger.getLogger(SeleccionTableros.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            } while (hayCambios);
+        } else if (opcion == 1) {
+            do {
+                hayCambios = false;
+                for (int i = 0; i < componentes.getTablerosCargados().obtenerSize() - 1; i++) {
+                    
+                    int tamañoTotalSig = 0;
+                    int tamañoTotal = 0;
+                    try {
+                        tamañoTotalSig = componentes.getTablerosCargados().obtenerValor(i+1).getFilas() * componentes.getTablerosCargados().obtenerValor(i+1).getColumnas();
+                        tamañoTotal = componentes.getTablerosCargados().obtenerValor(i).getFilas() * componentes.getTablerosCargados().obtenerValor(i).getColumnas();
+                    } catch (ListaException ex) {
+                        Logger.getLogger(SeleccionTableros.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    if (tamañoTotalSig != 0) {
+                        if (tamañoTotalSig < tamañoTotal) {
+                            try {
+                                auxiliar = componentes.getTablerosCargados().obtenerValor(i);
+                                //auxiliarTexto = puntajes[i];
+                                tablerosOrdenado[i] = componentes.getTablerosCargados().obtenerValor(i+1);
+                                //puntajes[i] = puntajes[i + 1];
+                                tablerosOrdenado[i + 1] = auxiliar;
+                                //puntajes[i + 1] = auxiliarTexto;
+                                hayCambios = true;
+                            } catch (ListaException ex) {
+                                Logger.getLogger(SeleccionTableros.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+            } while (hayCambios);
+        }
+
+        return tablerosOrdenado;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -268,6 +391,8 @@ public class SeleccionTableros extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMayMen;
+    private javax.swing.JButton btnMenMay;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSeleccionarTablero;
     private javax.swing.JLabel jLabel1;

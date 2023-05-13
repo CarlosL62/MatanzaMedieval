@@ -139,6 +139,8 @@
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="btnMayMen" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnMenMay" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -156,7 +158,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnSeleccionarTablero" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="127" max="32767" attributes="0"/>
+                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <Component id="btnMayMen" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnMenMay" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -187,6 +193,22 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tablero No:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMayMen">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mayor a menor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMayMenActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMenMay">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Menor a mayor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenMayActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -612,8 +612,10 @@ public class Inventario extends javax.swing.JFrame {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         if (lblCombatiente1.getText().equals("Ninguno")) {
             try {
+                jugablesPartida[0] = (Jugables) componentes.getPersonajesJugables().obtenerValor(jcbPersonajes.getSelectedIndex()).clone();
                 jugablesPartida[0] = componentes.getPersonajesJugables().obtenerValor(jcbPersonajes.getSelectedIndex());
                 lblCombatiente1.setText(jugablesPartida[0].getNickName());
+                
                 
                 // Seteamos el item seleccionado al primero, luego de eliminar el item seleccionado
                 //jcbPersonajes.removeItemAt(jcbPersonajes.getSelectedIndex());
@@ -621,10 +623,13 @@ public class Inventario extends javax.swing.JFrame {
                 //jcbPersonajesActionPerformed(evt);
             } catch (ListaException ex) {
                 Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
                 // Se verifica que no seleccione el mismo jugador dos veces
+                jugablesPartida[1] = (Jugables) componentes.getPersonajesJugables().obtenerValor(jcbPersonajes.getSelectedIndex()).clone();
                 jugablesPartida[1] = componentes.getPersonajesJugables().obtenerValor(jcbPersonajes.getSelectedIndex());
                 if (jugablesPartida[0] == jugablesPartida[1]) {
                     //Advertencia
@@ -642,6 +647,8 @@ public class Inventario extends javax.swing.JFrame {
                 }
                 
             } catch (ListaException ex) {
+                Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
