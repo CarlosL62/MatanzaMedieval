@@ -66,7 +66,7 @@ public class Casillas extends JButton{
         return casillas;
     }
     
-    public void cambiarIcono() throws IOException{
+    public void cambiarIcono(){
         //Se obtiene la ruta de la imagen
         Icon iconoOriginal = new ImageIcon(getClass().getResource(ruta));
         ImageIcon icono = (ImageIcon) iconoOriginal;

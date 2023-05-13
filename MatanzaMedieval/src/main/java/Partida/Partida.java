@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -347,6 +348,7 @@ public class Partida extends javax.swing.JFrame {
         for (int i = 0; i < control.getFilas(); i++) {
             y = casillaTamañoFilas * i;
             for (int j = 0; j < control.getColumnas(); j++) {
+                resetButton(botonesAsignados[i][j]);
                 x = casillaTamañoColumnas * j;
                 botonesAsignados[i][j].setCoordenadaY(i);
                 botonesAsignados[i][j].setCoordenadaX(j);
@@ -357,16 +359,21 @@ public class Partida extends javax.swing.JFrame {
                 botonesAsignados[i][j].setFont(new Font("Arial", Font.PLAIN, (int) (8)));
 
                 botonesAsignados[i][j].addActionListener(bt);
-                try {
-                    botonesAsignados[i][j].cambiarIcono();
-                } catch (IOException ex) {
-                    Logger.getLogger(Partida.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                botonesAsignados[i][j].cambiarIcono();
                 pnlTablero.add(botonesAsignados[i][j]);
             }
         }
         pnlTablero.repaint();
         pnlTablero.revalidate();
+    }
+    
+    public void resetButton(JButton boton){
+        ActionListener[] acciones = boton.getActionListeners();
+        if(acciones.length!=0){
+            for (int j = 0; j < acciones.length; j++) {
+                boton.removeActionListener(acciones[j]);
+            }
+        }
     }
 
     public void statusPersonajes() {
@@ -498,6 +505,7 @@ public class Partida extends javax.swing.JFrame {
                         //Se chequea que haya enemigos vivos aún
                         if (control.enemigosMuertos(enemigos)) {
                             cerrarPartida("Felicidades, has defendido al reino");
+                            componentes.setOro(componentes.getOro() + 200);
                             break;
                         } else if (jugablesPartida[0].getVida() <= 0) {
                             cerrarPartida("Has perdido, han matado a todos los niños del reino");
